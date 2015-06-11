@@ -3,11 +3,9 @@ package com.nullpointerapps.gaexam;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Individuo{
     private ReteNeurale cervello;
@@ -47,7 +45,7 @@ public class Individuo{
         AffineTransform tx = new AffineTransform();
         tx.translate(pos.x,pos.y);
         tx.scale(0.1,0.1);
-        tx.rotate(rotazione, img.getWidth() / 2, img.getHeight() / 2);
+        tx.rotate(rotazione - Config.Pi / 2, img.getWidth() / 2, img.getHeight() / 2);
         g2d.drawImage(img,tx ,null);
         controllaCollisione();
     }
@@ -67,15 +65,15 @@ public class Individuo{
         inputs.add(direzione.y);
         //vengono passati gli input alla rete neurale
         outputs = cervello.aggiorna(inputs);
-        //controlla se il numero degli output è corretto
+        //controlla se il numero degli output ï¿½ corretto
         if (outputs.size() < Config.nOutput) return false;
 
         ruotaDx = outputs.get(0);
         ruotaSx = outputs.get(1);
-        //calcola l'intensità dello sterzo
+        //calcola l'intensitï¿½ dello sterzo
         double intSterzo = ruotaDx - ruotaSx;
-        //controlla che l'intensità dello sterzo sia all'interno del
-        //range fissato, se non lo è cambia i valori non consoni con
+        //controlla che l'intensitï¿½ dello sterzo sia all'interno del
+        //range fissato, se non lo ï¿½ cambia i valori non consoni con
         //quelli del limite
         intSterzo= Math.max(-Config.MaxSterzo, Math.min(Config.MaxSterzo, intSterzo));
 
@@ -84,10 +82,10 @@ public class Individuo{
 
         direzione.x = -Math.sin(rotazione);
         direzione.y = Math.cos(rotazione);
-        //moltiplica il vettore direzione per la velocità e poi
+        //moltiplica il vettore direzione per la velocitï¿½ e poi
         //lo somma al vettore posizione
         pos.incrementaDi(direzione.moltiplica(velocita));
-        //vari controlli per determinare se la posizione è
+        //vari controlli per determinare se la posizione ï¿½
         //all'interno della finestra
         if (pos.x > Config.LarghezzaFinestra) pos.x=0;
         if (pos.x < 0) pos.x= Config.LarghezzaFinestra;
