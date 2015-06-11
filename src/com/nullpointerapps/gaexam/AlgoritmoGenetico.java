@@ -1,11 +1,10 @@
 package com.nullpointerapps.gaexam;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class AlgoritmoGenetico {
-    private ArrayList<Genoma> popolazione;
+    private ArrayList<Genoma> popolazione = new ArrayList<>();
     private int dimPop;
     private int lungCromo;
     private double totFitness;

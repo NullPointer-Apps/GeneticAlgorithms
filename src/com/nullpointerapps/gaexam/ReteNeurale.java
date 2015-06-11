@@ -1,35 +1,40 @@
 package com.nullpointerapps.gaexam;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReteNeurale {
-    private int nInput = 4;
-    private int nOutput = 2;
-    private int nLNascosti = 1;
-    private int nNpLN = 6;
+    private int nInput = Config.nInput;
+    private int nOutput = Config.nOutput;
+    private int nLNascosti = Config.nNascosti;
+    private int nNpLN = Config.NPlN;
     private ArrayList<LayerNeuroni> layers;
+    private ArrayList<Neurone> neuroni;
 
     public ReteNeurale(){
     }
 
-    String  getProperty(String key) {
-        try {
-            return new GetProperties().getPropValue(key);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void setNeuroni () {
+        for (int i =0; i< nNpLN;i++) {
+            neuroni.add(new Neurone(nInput));
         }
-        return "";
     }
 
     public void creaRete(){
         layers = new ArrayList<>();
+        neuroni = new ArrayList<>();
+        if(nLNascosti>0) {
+            //layer nascosto
+            layers.add(new LayerNeuroni(nNpLN,nInput));
+            for (int i =0;i<nLNascosti;i++) {
+                layers.add(new LayerNeuroni(nNpLN,nInput));
+            }
+            //layer di output
+            layers.add(new LayerNeuroni(nOutput,nNpLN));
+        } else {
+            layers.add(new LayerNeuroni(nOutput,nNpLN));
+        }
 
-        //layer nascosto
-        layers.add(new LayerNeuroni(nNpLN,nInput));
-        //layer di output
-        layers.add(new LayerNeuroni(nOutput,nNpLN));
     }
 
     ArrayList<Double> getPesi(){
@@ -49,6 +54,15 @@ public class ReteNeurale {
     }
 
     void setPesi(ArrayList<Double> pesi){
+        int contaPesi = 0 ;
+        for(int i = 0;i<Config.nNascosti;i++) {
+            for(int j =0;j<layers.get(i).nNeuroni;j++) {
+                for(int k =0;k<layers.get(i).layer.get(j).nInput;k++) {
+                    layers.get(i).layer.get(j).pesi.set(k,pesi.get(contaPesi));
+                    contaPesi++;
+                }
+            }
+        }
 
     }
 
@@ -65,7 +79,7 @@ public class ReteNeurale {
         //for per ogni layer
         for (int i=0;i<=nLNascosti; i++){
             if (i>0){
-                inputs=outputs;
+               // inputs=outputs;
             }
             outputs.clear();
 
@@ -86,9 +100,9 @@ public class ReteNeurale {
                 }
 
                 //aggiungo l'errore
-               netInput += n.pesi.get(nInput-1)*Double.parseDouble(getProperty("BIAS"));
+               netInput += n.pesi.get(nInput-1)* Config.BIAS;
 
-               outputs.add(Sigmoide(netInput, Double.parseDouble(getProperty("Risposta"))));
+               outputs.add(Sigmoide(netInput, Config.Risposta));
 
                pesoC=0;
             }
