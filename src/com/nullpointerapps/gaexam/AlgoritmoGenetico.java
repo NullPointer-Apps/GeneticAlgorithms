@@ -163,8 +163,9 @@ public class AlgoritmoGenetico {
     //e restituisce una nuova popolazione
     public ArrayList<Genoma> Epoca(ArrayList<Genoma> vecchiaPop){
         popolazione=vecchiaPop;
-        Reset();
         Collections.sort(popolazione);
+        Collections.reverse(popolazione);
+        Reset();
         CalcolaMigPegMediaTot();
         ArrayList<Genoma> nuovaPop = new ArrayList<>();
 
@@ -211,7 +212,7 @@ public class AlgoritmoGenetico {
     }
 
     public double getFitnessMedia(){
-        return totFitness/dimPop;
+        return mediaFitness;
     }
 
     public double getMigFitness(){

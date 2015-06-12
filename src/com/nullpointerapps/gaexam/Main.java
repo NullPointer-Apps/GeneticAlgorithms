@@ -17,7 +17,6 @@ public class Main extends JPanel {
     public static BufferedImage imgInd;
     public static BufferedImage imgOgg;
     public static BufferedImage imgMInd;
-    public static MersenneTwisterFast random = null;
     private static ArrayList<Genoma> popolazione = new ArrayList<>();
     private static ArrayList<Individuo> individui = new ArrayList<>();
     private static AlgoritmoGenetico ag;
@@ -64,7 +63,6 @@ public class Main extends JPanel {
 
             }
         });
-        if (random == null) random = new MersenneTwisterFast();
 
         if (individui.size() == 0) {
             for (int i = 0; i < Config.nIndividui; i++) individui.add(new Individuo());
@@ -126,11 +124,15 @@ public class Main extends JPanel {
         if (cicliGenerazione++ < Config.nCicli) {
             for (int i = 0; i < Config.nIndividui; i++) individui.get(i).move();
         } else {
+            for (int i = 0; i < Config.nIndividui; i++) {
+                popolazione.get(i).setFitness(individui.get(i).getFitness());
+            }
+            popolazione = ag.Epoca(popolazione);
             listaFitnessMedie.add(ag.getFitnessMedia());
             listaFitnessMig.add(ag.getMigFitness());
+            System.out.println("Generazione " + contoGenerazione + " Media Fitness: "+listaFitnessMedie.get(contoGenerazione-1)+" Migliore Fitness: " + listaFitnessMig.get(contoGenerazione-1));
             contoGenerazione++;
             cicliGenerazione = 0;
-            popolazione = ag.Epoca(popolazione);
 
             for (int i = 0; i < Config.nIndividui; i++) {
                 individui.get(i).setPesi(popolazione.get(i).pesi);

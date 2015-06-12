@@ -95,9 +95,11 @@ public class Individuo{
         double distObiettivo = 9999999.0;
         Vettore2D obiettivo = new Vettore2D(0,0);
         double distanza;
+        Vettore2D a;
+        Vettore2D b;
         for (int i = 0; i<oggetti.size();i++) {
-            Vettore2D b = oggetti.get(i).getPos();
-            Vettore2D a = b.diminuisci(pos);
+             b = oggetti.get(i).getPos();
+             a = b.diminuisci(pos);
             distanza = Vettore2D.getLunghezza(a);
             if(distanza < distObiettivo) {
                 distObiettivo = distanza;
