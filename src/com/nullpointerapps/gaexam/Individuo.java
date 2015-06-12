@@ -1,10 +1,8 @@
 package com.nullpointerapps.gaexam;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Individuo{
@@ -19,6 +17,7 @@ public class Individuo{
     private double scalaIndividuo;
     private int indexObbiettivo;
     private BufferedImage img;
+    boolean elite = false;
 
     public Individuo(){
         rotazione=Math.random()*Config.DuePi;
@@ -37,11 +36,8 @@ public class Individuo{
     }
 
     public void paint(Graphics2D g2d) {
-        try {
-            img = ImageIO.read((getClass().getClassLoader().getResource("images/individuo.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (!elite)img=Main.imgInd;
+        else img=Main.imgMInd;
         AffineTransform tx = new AffineTransform();
         tx.translate(pos.x,pos.y);
         tx.scale(0.1,0.1);

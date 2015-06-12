@@ -1,7 +1,9 @@
 package com.nullpointerapps.gaexam;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,6 +20,9 @@ public class Main extends JPanel {
     private boolean modVeloce;
     private int cicliGenerazione;
     private static int contoGenerazione = 1;
+    public static BufferedImage imgInd;
+    public static BufferedImage imgOgg;
+    public static BufferedImage imgMInd;
 
     private void disegnaGrafico() {
 
@@ -68,6 +73,8 @@ public class Main extends JPanel {
         System.out.println("Epoca " + System.currentTimeMillis()/1000);
         try {
             new Config();
+            imgInd = ImageIO.read((Main.class.getClassLoader().getResource("images/individuo.png")));
+            imgOgg = ImageIO.read((Main.class.getClassLoader().getResource("images/oggetto.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,10 +3,8 @@ package com.nullpointerapps.gaexam;
 //We heard you like objects so
 //we put an object in your objects
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Oggetto
 {
@@ -19,12 +17,7 @@ public class Oggetto
     }
 
     public void paint(Graphics2D g2d) {
-        try {
-            img = ImageIO.read((getClass().getClassLoader().getResource("images/oggetto.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        img=Main.imgOgg;
         g2d.drawImage(img,(int)pos.x,(int)pos.y,15,15,null);
     }
 
