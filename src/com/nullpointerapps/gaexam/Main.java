@@ -123,7 +123,7 @@ public class Main extends JPanel {
     }
 
     private void move() {
-        if(cicliGenerazione++<Config.nCicli) {
+        if (cicliGenerazione++ < Config.nCicli) {
             for (int i = 0; i < Config.nIndividui; i++) individui.get(i).move();
         } else {
             listaFitnessMedie.add(ag.getFitnessMedia());
@@ -132,12 +132,12 @@ public class Main extends JPanel {
             cicliGenerazione = 0;
             popolazione = ag.Epoca(popolazione);
 
-            for(int i = 0; i<Config.nIndividui;i++) {
+            for (int i = 0; i < Config.nIndividui; i++) {
                 individui.get(i).setPesi(popolazione.get(i).pesi);
                 individui.get(i).Reset();
             }
             oggetti.clear();
-            nOggettiReali=0;
+            nOggettiReali = 0;
         }
     }
 
@@ -145,11 +145,11 @@ public class Main extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        for(;nOggettiReali<Config.nOggetti;nOggettiReali++) oggetti.add(new Oggetto());
-        if (individui.size()== 0) {
-            for(int i = 0;i<Config.nIndividui;i++) individui.add(new Individuo());
+        for (; nOggettiReali < Config.nOggetti; nOggettiReali++) oggetti.add(new Oggetto());
+        if (individui.size() == 0) {
+            for (int i = 0; i < Config.nIndividui; i++) individui.add(new Individuo());
         }
         if (isModVeloce) {
             /*disegnaGrafico(g2d);
@@ -163,8 +163,8 @@ public class Main extends JPanel {
         }
 
         g2d.setColor(Color.RED);
-        g2d.setFont(new Font("Arial",Font.BOLD,20));
-        g2d.drawString("Generazione: "+ contoGenerazione,10,30);
+        g2d.setFont(new Font("Arial", Font.BOLD, 20));
+        g2d.drawString("Generazione: " + contoGenerazione, 10, 30);
 
     }
 }
