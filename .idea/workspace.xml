@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb361e0c-d50f-4657-b52c-be53be4d09f9" name="Default" comment="Fix random e aggiunta fastmode">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/nullpointerapps/gaexam/MersenneTwisterFast.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/AlgoritmoGenetico.class" afterPath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/AlgoritmoGenetico.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Config.class" afterPath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Config.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Individuo.class" afterPath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Individuo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Main.class" afterPath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Neurone.class" afterPath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Neurone.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Oggetto.class" afterPath="$PROJECT_DIR$/out/production/GeneticAlgorithms/com/nullpointerapps/gaexam/Oggetto.class" />
+    <list default="true" id="eb361e0c-d50f-4657-b52c-be53be4d09f9" name="Default" comment="Fix commit precedente">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/geneticalgorithms.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/geneticalgorithms.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_geneticalgorithms.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GeneticAlgorithms.iws" />
@@ -361,7 +358,13 @@
       <option name="project" value="LOCAL" />
       <updated>1434122509366</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fix commit precedente">
+      <created>1434122656257</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1434122656257</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -410,7 +413,8 @@
     </ignored-roots>
     <MESSAGE value="Fix Rotazione" />
     <MESSAGE value="Fix random e aggiunta fastmode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix random e aggiunta fastmode" />
+    <MESSAGE value="Fix commit precedente" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix commit precedente" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -816,7 +820,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1247" column="75" selection-start-line="1247" selection-start-column="75" selection-end-line="1247" selection-end-column="75" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>

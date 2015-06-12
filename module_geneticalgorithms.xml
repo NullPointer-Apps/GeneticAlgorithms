@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_geneticalgorithms" default="compile.module.geneticalgorithms">
+    <dirname property="module.geneticalgorithms.basedir" file="${ant.file.module_geneticalgorithms}"/>
+
+    <property name="module.jdk.home.geneticalgorithms" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.geneticalgorithms" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.geneticalgorithms" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.geneticalgorithms" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+
+    <property name="geneticalgorithms.output.dir"
+              value="${module.geneticalgorithms.basedir}/out/production/GeneticAlgorithms"/>
+    <property name="geneticalgorithms.testoutput.dir"
+              value="${module.geneticalgorithms.basedir}/out/test/GeneticAlgorithms"/>
+
+    <path id="geneticalgorithms.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="geneticalgorithms.module.production.classpath">
+        <path refid="${module.jdk.classpath.geneticalgorithms}"/>
+    </path>
+
+    <path id="geneticalgorithms.runtime.production.module.classpath">
+        <pathelement location="${geneticalgorithms.output.dir}"/>
+    </path>
+
+    <path id="geneticalgorithms.module.classpath">
+        <path refid="${module.jdk.classpath.geneticalgorithms}"/>
+        <pathelement location="${geneticalgorithms.output.dir}"/>
+    </path>
+
+    <path id="geneticalgorithms.runtime.module.classpath">
+        <pathelement location="${geneticalgorithms.testoutput.dir}"/>
+        <pathelement location="${geneticalgorithms.output.dir}"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.geneticalgorithms">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.geneticalgorithms">
+        <patternset refid="excluded.from.module.geneticalgorithms"/>
+    </patternset>
+
+    <path id="geneticalgorithms.module.sourcepath">
+        <dirset dir="${module.geneticalgorithms.basedir}">
+            <include name="src"/>
+            <include name="resources"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.geneticalgorithms"
+            depends="compile.module.geneticalgorithms.production,compile.module.geneticalgorithms.tests"
+            description="Compile module GeneticAlgorithms"/>
+
+    <target name="compile.module.geneticalgorithms.production" depends="register.custom.compilers"
+            description="Compile module GeneticAlgorithms; production classes">
+        <mkdir dir="${geneticalgorithms.output.dir}"/>
+        <javac2 destdir="${geneticalgorithms.output.dir}" debug="${compiler.debug}"
+                nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+                executable="${module.jdk.bin.geneticalgorithms}/javac">
+            <compilerarg line="${compiler.args.geneticalgorithms}"/>
+            <bootclasspath refid="geneticalgorithms.module.bootclasspath"/>
+            <classpath refid="geneticalgorithms.module.production.classpath"/>
+            <src refid="geneticalgorithms.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.geneticalgorithms"/>
+        </javac2>
+
+        <copy todir="${geneticalgorithms.output.dir}">
+            <fileset dir="${module.geneticalgorithms.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.geneticalgorithms.basedir}/resources">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.geneticalgorithms.tests"
+            depends="register.custom.compilers,compile.module.geneticalgorithms.production"
+            description="compile module GeneticAlgorithms; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.geneticalgorithms" description="cleanup module">
+        <delete dir="${geneticalgorithms.output.dir}"/>
+        <delete dir="${geneticalgorithms.testoutput.dir}"/>
+    </target>
+</project>
