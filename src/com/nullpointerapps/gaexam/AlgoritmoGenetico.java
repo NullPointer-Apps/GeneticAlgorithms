@@ -19,21 +19,47 @@ public class AlgoritmoGenetico {
     private int contoGenerazioni;
 
 
+    public AlgoritmoGenetico(int dimPop, double probMutazione, double probCrossover, int nPesi) {
+        //inizializza la popolazione con cromosomi con pesi a caso
+        // e tutti i valori di fitness a zero
+
+        this.dimPop = dimPop;
+        this.probMutazione = probMutazione;
+        this.probCrossover = probCrossover;
+        lungCromo = nPesi;
+        totFitness = 0;
+        contoGenerazioni = 0;
+        migGenoma = 0;
+        migFitness = 0;
+        pegFitness = 9999999;
+        mediaFitness = 0;
+
+        for (int i = 0; i < dimPop; ++i) {
+            popolazione.add(new Genoma());
+            for (int j = 0; j < lungCromo; ++j) {
+                popolazione.get(i).pesi.add(Main.random.nextDouble() - Main.random.nextDouble());
+            }
+        }
+    }
+
+    //Muta il cromosoma modificando i suoi pesi di un valore
+    //minore del paramentro PerturbazioneMax
+
     //Dati due genitori e due contenitori per la prole questo metodo
     //esegue il crossing over secono la probabilità di Crossing Over dell'AG
     private ArrayList<ArrayList<Double>> Crossover(ArrayList<Double> mamma,
-                           ArrayList<Double> papa,
-                           ArrayList<Double> figlio1,
-                           ArrayList<Double> figlio2){
+                                                   ArrayList<Double> papa,
+                                                   ArrayList<Double> figlio1,
+                                                   ArrayList<Double> figlio2) {
         ArrayList<ArrayList<Double>> figli = new ArrayList<>();
         //ritorna i genitori come figli se non c'è crossover
         //o se i genitori sono uguali
-        if ( (Math.random() > probCrossover) || (mamma.equals(papa))) {
+        if ((Main.random.nextDouble() > probCrossover) || (mamma.equals(papa))) {
             figlio1 = mamma;
             figlio2 = papa;
         } else {
             //determino a random un punto di crossover
-            int cp = (int) (Math.random() * (lungCromo - 1));
+            int cp = (int) (Main.random.nextDouble() * (lungCromo - 1));
 
             //creo la prole
             for (int i = 0; i < cp; ++i) {
@@ -51,18 +77,15 @@ public class AlgoritmoGenetico {
         return figli;
     }
 
-    //Muta il cromosoma modificando i suoi pesi di un valore
-    //minore del paramentro PerturbazioneMax
-
     private ArrayList<Double> Mutazione(ArrayList<Double> cromosoma){
         //ogni peso del cromosoma viene mutato, o anche no,
         //in base alla probabilità di mutazione
         for (int i=0;i<cromosoma.size();i++) {
             Double peso=cromosoma.get(i);
-            if (Math.random() < probMutazione) {
+            if (Main.random.nextDouble() < probMutazione) {
                 //la mutazione avviene aggiungendo, o togliendo, un piccolo
                 //valore random (-1<n<1 • PerturbazioneMax)
-                peso += ((Math.random()-Math.random()) * Config.DisturboMassimo);
+                peso += ((Main.random.nextDouble() - Main.random.nextDouble()) * Config.DisturboMassimo);
             }
             cromosoma.set(i,peso);
         }
@@ -72,7 +95,7 @@ public class AlgoritmoGenetico {
     private Genoma getRouletteCromosoma(){
 
         //un numero a random tra 0 e la fitness totale
-        double n = ((Math.random()-Math.random()) * totFitness);
+        double n = ((Main.random.nextDouble() - Main.random.nextDouble()) * totFitness);
 
         //genoma da trovare
         Genoma trovato=null;
@@ -134,30 +157,6 @@ public class AlgoritmoGenetico {
         migFitness=0;
         pegFitness=9999999;
         mediaFitness=0;
-    }
-
-    public AlgoritmoGenetico(int dimPop, double probMutazione, double probCrossover, int nPesi){
-        //inizializza la popolazione con cromosomi con pesi a caso
-        // e tutti i valori di fitness a zero
-
-        this.dimPop=dimPop;
-        this.probMutazione = probMutazione;
-        this.probCrossover = probCrossover;
-        lungCromo=nPesi;
-        totFitness=0;
-        contoGenerazioni=0;
-        migGenoma=0;
-        migFitness=0;
-        pegFitness=9999999;
-        mediaFitness=0;
-
-        for (int i=0; i<dimPop; ++i) {
-            popolazione.add(new Genoma());
-            for (int j=0; j<lungCromo; ++j)
-            {
-                popolazione.get(i).pesi.add(Math.random()-Math.random());
-            }
-        }
     }
 
     //Prende la vecchia popolazione, fa un ciclo

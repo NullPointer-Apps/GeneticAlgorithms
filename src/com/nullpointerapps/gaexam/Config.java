@@ -11,6 +11,7 @@ public class Config {
      public static int LarghezzaFinestra = 800;
      public static int AltezzaFinestra = 600;
      public static int FPS = 0;
+    public static int FPSfastMode = 480;
      public static int nInput = 0;
      public static int nNascosti = 0;
      public static int NPlN = 0;
@@ -63,6 +64,5 @@ public class Config {
       DisturboMassimo = Double.parseDouble(prop.getProperty("DisturboMassimo"));
       nElite = Integer.parseInt(prop.getProperty("nElite"));
       nCopieElite = Integer.parseInt(prop.getProperty("nCopieElite"));
-        System.out.println("nIndividui" + nIndividui);
     }
 }

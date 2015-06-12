@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Individuo{
+    boolean elite = false;
     private ReteNeurale cervello;
     private Vettore2D pos;
     private Vettore2D direzione;
@@ -17,20 +18,19 @@ public class Individuo{
     private double scalaIndividuo;
     private int indexObbiettivo;
     private BufferedImage img;
-    boolean elite = false;
 
     public Individuo(){
-        rotazione=Math.random()*Config.DuePi;
+        rotazione = Main.random.nextDouble() * Config.DuePi;
         ruotaDx=0.16;
         ruotaSx=0.16;
         fitness=0;
         scalaIndividuo=Config.ScalaIndividuo;
         indexObbiettivo=0;
 
-        pos=new Vettore2D(Math.random()* (Config.LarghezzaFinestra-45),
-                Math.random()* (Config.AltezzaFinestra-45));
-        direzione=new Vettore2D(Math.random(),
-                Math.random());
+        pos = new Vettore2D(Main.random.nextDouble() * (Config.LarghezzaFinestra - 45),
+                Main.random.nextDouble() * (Config.AltezzaFinestra - 45));
+        direzione = new Vettore2D(Main.random.nextDouble(),
+                Main.random.nextDouble());
         cervello = new ReteNeurale();
         cervello.creaRete();
     }
@@ -121,10 +121,10 @@ public class Individuo{
     }
 
     public void Reset() {
-        pos=new Vettore2D(Math.random()* Config.LarghezzaFinestra,
-                Math.random()* Config.AltezzaFinestra);
+        pos = new Vettore2D(Main.random.nextDouble() * Config.LarghezzaFinestra,
+                Main.random.nextDouble() * Config.AltezzaFinestra);
         fitness=0;
-        rotazione=Math.random()*Config.DuePi;
+        rotazione = Main.random.nextDouble() * Config.DuePi;
     }
 
     public Vettore2D getPosition() {
