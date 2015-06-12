@@ -77,19 +77,18 @@ public class ReteNeurale {
         }
 
         //for per ogni layer
-        for (int i=0;i<=nLNascosti; i++){
+        for (int i=0;i<nLNascosti; i++){
             if (i>0){
-               // inputs=outputs;
+               inputs=outputs;
             }
             outputs.clear();
-
             pesoC=0;
 
             LayerNeuroni ln = layers.get(i);
             //for per neuroni del layer i
             for (int j=0; j<ln.nNeuroni;j++){
                 double netInput = 0;
-                Neurone n = ln.layer.get(i);
+                Neurone n = ln.layer.get(j);
                 int nInput= n.nInput;
 
                 //for per ogni peso del neurone j

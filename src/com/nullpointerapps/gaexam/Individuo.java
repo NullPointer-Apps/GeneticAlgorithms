@@ -28,8 +28,8 @@ public class Individuo{
         scalaIndividuo=Config.ScalaIndividuo;
         indexObbiettivo=0;
 
-        pos=new Vettore2D(Math.random()* Config.LarghezzaFinestra-45,
-                Math.random()* Config.AltezzaFinestra-45);
+        pos=new Vettore2D(Math.random()* (Config.LarghezzaFinestra-45),
+                Math.random()* (Config.AltezzaFinestra-45));
         direzione=new Vettore2D(Math.random(),
                 Math.random());
         cervello = new ReteNeurale();
@@ -88,9 +88,9 @@ public class Individuo{
         //vari controlli per determinare se la posizione �
         //all'interno della finestra
         if (pos.x > Config.LarghezzaFinestra) pos.x=0;
-        if (pos.x < 0) pos.x= Config.LarghezzaFinestra;
+        if (pos.x < -15) pos.x= Config.LarghezzaFinestra;
         if (pos.y > Config.AltezzaFinestra) pos.y=0;
-        if (pos.y < 0) pos.y= Config.AltezzaFinestra;
+        if (pos.y < -15) pos.y= Config.AltezzaFinestra;
         return true;
     }
 

@@ -39,8 +39,10 @@ public class Main extends JPanel {
                 individui.get(i).setPesi(popolazione.get(i).pesi);
                 individui.get(i).Reset();
             }
+            oggetti.clear();
+            nOggettiReali=0;
         }
-        System.out.println("Ciclo " + cicliGenerazione);
+        //System.out.println("Ciclo " + cicliGenerazione);
     }
 
     @Override
@@ -90,9 +92,6 @@ public class Main extends JPanel {
         }
 
         for(nOggettiReali =0;nOggettiReali<Config.nOggetti;nOggettiReali++) oggetti.add(new Oggetto());
-
-
-
 
         while(true) {
             main.move();
