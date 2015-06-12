@@ -7,7 +7,6 @@ import java.util.Properties;
 
 public class Config {
      public static double Pi = 3.14159265358979;
-     public static double MezzoPi = Pi / 2;
      public static double DuePi = Pi * 2;
      public static int LarghezzaFinestra = 800;
      public static int AltezzaFinestra = 600;

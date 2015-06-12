@@ -17,9 +17,7 @@ public class Main extends JPanel {
     private ArrayList<Double> listaFitnessMig = new ArrayList<>();
     private boolean modVeloce;
     private int cicliGenerazione;
-    private static int contoGenerazione = 0;
-    private int altezzaFinestra;
-    private int larghezzaFinestra;
+    private static int contoGenerazione = 1;
 
     private void disegnaGrafico() {
 
@@ -33,16 +31,19 @@ public class Main extends JPanel {
             listaFitnessMig.add(ag.getMigFitness());
             contoGenerazione++;
             cicliGenerazione = 0;
+            System.out.println("prova"+ contoGenerazione);
             popolazione = ag.Epoca(popolazione);
 
+            System.out.println("prova"+contoGenerazione);
             for(int i = 0; i<Config.nIndividui;i++) {
                 individui.get(i).setPesi(popolazione.get(i).pesi);
                 individui.get(i).Reset();
             }
+            System.out.println("prova"+contoGenerazione);
             oggetti.clear();
             nOggettiReali=0;
+            System.out.println("Epoca " + System.currentTimeMillis()/1000);
         }
-        //System.out.println("Ciclo " + cicliGenerazione);
     }
 
     @Override
@@ -64,12 +65,13 @@ public class Main extends JPanel {
     }
 
     public static void main(String[] args) {
+        System.out.println("Epoca " + System.currentTimeMillis()/1000);
         try {
             new Config();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JFrame frame = new JFrame("SeFunzionaSpaccoTutto");
+        JFrame frame = new JFrame("Evoluzione");
         Main main = new Main();
         frame.add(main);
         frame.setResizable(false);
@@ -93,15 +95,30 @@ public class Main extends JPanel {
 
         for(nOggettiReali =0;nOggettiReali<Config.nOggetti;nOggettiReali++) oggetti.add(new Oggetto());
 
-        while(true) {
+        long passato;
+        long inizio;
+        long aspetta;
+        long velSimulazione = 1000/Config.FPS;
+        boolean inCorso=true;
+
+        while(inCorso) {
+
+            inizio = System.nanoTime();
+
             main.move();
             main.repaint();
+
+            passato = System.nanoTime() - inizio;
+
+            aspetta = velSimulazione - passato / 1000000;
+            if (aspetta < 0) {
+                aspetta = 5;
+            }
             try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
+                Thread.sleep(aspetta);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-	// write your code here
     }
 }
