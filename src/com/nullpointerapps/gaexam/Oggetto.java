@@ -12,8 +12,8 @@ public class Oggetto
     private BufferedImage img;
 
     public Oggetto() {
-        pos = new Vettore2D(Main.random.nextDouble() * (Config.LarghezzaFinestra - 45),
-                Main.random.nextDouble() * (Config.AltezzaFinestra - 45));
+        pos = new Vettore2D(Math.random() * (Config.LarghezzaFinestra - 45),
+                Math.random() * (Config.AltezzaFinestra - 45));
     }
 
     public void paint(Graphics2D g2d) {

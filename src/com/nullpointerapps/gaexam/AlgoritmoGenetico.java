@@ -37,7 +37,7 @@ public class AlgoritmoGenetico {
         for (int i = 0; i < dimPop; ++i) {
             popolazione.add(new Genoma());
             for (int j = 0; j < lungCromo; ++j) {
-                popolazione.get(i).pesi.add(Main.random.nextDouble() - Main.random.nextDouble());
+                popolazione.get(i).pesi.add(Math.random() - Math.random());
             }
         }
     }
@@ -54,12 +54,12 @@ public class AlgoritmoGenetico {
         ArrayList<ArrayList<Double>> figli = new ArrayList<>();
         //ritorna i genitori come figli se non c'è crossover
         //o se i genitori sono uguali
-        if ((Main.random.nextDouble() > probCrossover) || (mamma.equals(papa))) {
+        if ((Math.random() > probCrossover) || (mamma.equals(papa))) {
             figlio1 = mamma;
             figlio2 = papa;
         } else {
             //determino a random un punto di crossover
-            int cp = (int) (Main.random.nextDouble() * (lungCromo - 1));
+            int cp = (int) (Math.random() * (lungCromo - 1));
 
             //creo la prole
             for (int i = 0; i < cp; ++i) {
@@ -82,10 +82,10 @@ public class AlgoritmoGenetico {
         //in base alla probabilità di mutazione
         for (int i=0;i<cromosoma.size();i++) {
             Double peso=cromosoma.get(i);
-            if (Main.random.nextDouble() < probMutazione) {
+            if (Math.random() < probMutazione) {
                 //la mutazione avviene aggiungendo, o togliendo, un piccolo
                 //valore random (-1<n<1 • PerturbazioneMax)
-                peso += ((Main.random.nextDouble() - Main.random.nextDouble()) * Config.DisturboMassimo);
+                peso += ((Math.random() - Math.random()) * Config.DisturboMassimo);
             }
             cromosoma.set(i,peso);
         }
@@ -95,7 +95,7 @@ public class AlgoritmoGenetico {
     private Genoma getRouletteCromosoma(){
 
         //un numero a random tra 0 e la fitness totale
-        double n = ((Main.random.nextDouble() - Main.random.nextDouble()) * totFitness);
+        double n = ((Math.random() - Math.random()) * totFitness);
 
         //genoma da trovare
         Genoma trovato=null;

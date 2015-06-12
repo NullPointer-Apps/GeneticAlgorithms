@@ -20,17 +20,17 @@ public class Individuo{
     private BufferedImage img;
 
     public Individuo(){
-        rotazione = Main.random.nextDouble() * Config.DuePi;
+        rotazione = Math.random() * Config.DuePi;
         ruotaDx=0.16;
         ruotaSx=0.16;
         fitness=0;
         scalaIndividuo=Config.ScalaIndividuo;
         indexObbiettivo=0;
 
-        pos = new Vettore2D(Main.random.nextDouble() * (Config.LarghezzaFinestra - 45),
-                Main.random.nextDouble() * (Config.AltezzaFinestra - 45));
-        direzione = new Vettore2D(Main.random.nextDouble(),
-                Main.random.nextDouble());
+        pos = new Vettore2D(Math.random() * (Config.LarghezzaFinestra - 45),
+                Math.random() * (Config.AltezzaFinestra - 45));
+        direzione = new Vettore2D(Math.random(),
+                Math.random());
         cervello = new ReteNeurale();
         cervello.creaRete();
     }
@@ -94,8 +94,11 @@ public class Individuo{
     public Vettore2D getObbiettivo(ArrayList<Oggetto> oggetti){
         double distObiettivo = 9999999.0;
         Vettore2D obiettivo = new Vettore2D(0,0);
+        double distanza;
         for (int i = 0; i<oggetti.size();i++) {
-            double distanza = Vettore2D.getLunghezza(oggetti.get(i).getPos().diminuisci(pos));
+            Vettore2D b = oggetti.get(i).getPos();
+            Vettore2D a = b.diminuisci(pos);
+            distanza = Vettore2D.getLunghezza(a);
             if(distanza < distObiettivo) {
                 distObiettivo = distanza;
                 obiettivo = pos.diminuisci(oggetti.get(i).getPos());
@@ -121,10 +124,10 @@ public class Individuo{
     }
 
     public void Reset() {
-        pos = new Vettore2D(Main.random.nextDouble() * Config.LarghezzaFinestra,
-                Main.random.nextDouble() * Config.AltezzaFinestra);
+        pos = new Vettore2D(Math.random() * Config.LarghezzaFinestra,
+                Math.random() * Config.AltezzaFinestra);
         fitness=0;
-        rotazione = Main.random.nextDouble() * Config.DuePi;
+        rotazione = Math.random() * Config.DuePi;
     }
 
     public Vettore2D getPosition() {

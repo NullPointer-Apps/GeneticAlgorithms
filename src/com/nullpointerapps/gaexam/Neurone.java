@@ -10,7 +10,7 @@ public class Neurone {
         this.nInput = nInput;
         pesi = new ArrayList<>();
         for (int i=0;i<=nInput;i++) {
-            pesi.add(Main.random.nextDouble() - Main.random.nextDouble());
+            pesi.add(Math.random() - Math.random());
         }
     }
 

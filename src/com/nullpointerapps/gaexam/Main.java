@@ -17,7 +17,7 @@ public class Main extends JPanel {
     public static BufferedImage imgInd;
     public static BufferedImage imgOgg;
     public static BufferedImage imgMInd;
-    public static MersenneTwisterFast random;
+    public static MersenneTwisterFast random = null;
     private static ArrayList<Genoma> popolazione = new ArrayList<>();
     private static ArrayList<Individuo> individui = new ArrayList<>();
     private static AlgoritmoGenetico ag;
@@ -64,7 +64,7 @@ public class Main extends JPanel {
 
             }
         });
-        random = new MersenneTwisterFast();
+        if (random == null) random = new MersenneTwisterFast();
 
         if (individui.size() == 0) {
             for (int i = 0; i < Config.nIndividui; i++) individui.add(new Individuo());
