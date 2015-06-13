@@ -42,8 +42,7 @@ public class Individuo{
         tx.translate(pos.x,pos.y);
         tx.scale(0.1,0.1);
         tx.rotate(rotazione - Config.Pi / 2, img.getWidth() / 2, img.getHeight() / 2);
-        g2d.drawImage(img,tx ,null);
-        controllaCollisione();
+        g2d.drawImage(img, tx, null);
     }
 
     public boolean move(){
@@ -87,6 +86,7 @@ public class Individuo{
         if (pos.x < -15) pos.x= Config.LarghezzaFinestra;
         if (pos.y > Config.AltezzaFinestra) pos.y=0;
         if (pos.y < -15) pos.y= Config.AltezzaFinestra;
+        controllaCollisione();
         return true;
     }
 

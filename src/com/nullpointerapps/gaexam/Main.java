@@ -120,7 +120,7 @@ public class Main extends JPanel {
 
     }
 
-    private void move() {
+    private synchronized void move() {
         if (cicliGenerazione++ < Config.nCicli) {
             for (int i = 0; i < Config.nIndividui; i++) individui.get(i).move();
         } else {
@@ -144,7 +144,7 @@ public class Main extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
+    public synchronized void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -154,11 +154,12 @@ public class Main extends JPanel {
             for (int i = 0; i < Config.nIndividui; i++) individui.add(new Individuo());
         }
         if (isModVeloce) {
-            /*disegnaGrafico(g2d);
+            disegnaGrafico(g2d);
             g2d.setFont(new Font("Arial",Font.BOLD,20));
-            g2d.drawString("Fitness migliore: "+ listaFitnessMig.get(0),10,60);
-            g2d.drawString("Fitness medio: "+ listaFitnessMedie.get(0),10,90);*/
-
+            if (listaFitnessMedie.size()!=0&&listaFitnessMig.size()!=0) {
+                g2d.drawString("Fitness migliore: " + listaFitnessMig.get(contoGenerazione-2), 10, 60);
+                g2d.drawString("Fitness medio: " + listaFitnessMedie.get(contoGenerazione-2), 10, 90);
+            }
         } else {
             for (int i = 0; i < nOggettiReali; i++) oggetti.get(i).paint(g2d);
             for (int i = 0; i < Config.nIndividui; i++) individui.get(i).paint(g2d);
