@@ -47,7 +47,7 @@ public class AlgoritmoGenetico {
 
     //Dati due genitori e due contenitori per la prole questo metodo
     //esegue il crossing over secono la probabilità di Crossing Over dell'AG
-    private ArrayList<ArrayList<Double>> Crossover(ArrayList<Double> mamma,
+    private synchronized ArrayList<ArrayList<Double>> Crossover(ArrayList<Double> mamma,
                                                    ArrayList<Double> papa,
                                                    ArrayList<Double> figlio1,
                                                    ArrayList<Double> figlio2) {
@@ -77,7 +77,7 @@ public class AlgoritmoGenetico {
         return figli;
     }
 
-    private ArrayList<Double> Mutazione(ArrayList<Double> cromosoma){
+    private synchronized ArrayList<Double> Mutazione(ArrayList<Double> cromosoma){
         //ogni peso del cromosoma viene mutato, o anche no,
         //in base alla probabilità di mutazione
         for (int i=0;i<cromosoma.size();i++) {
@@ -92,7 +92,7 @@ public class AlgoritmoGenetico {
         return cromosoma;
     }
 
-    private Genoma getRouletteCromosoma(){
+    private synchronized Genoma getRouletteCromosoma(){
 
         //un numero a random tra 0 e la fitness totale
         double n = ((Math.random() - Math.random()) * totFitness);
@@ -116,7 +116,7 @@ public class AlgoritmoGenetico {
         return trovato;
     }
 
-    private ArrayList<Genoma> scegliNMigliori (int nMig, int nCopie, ArrayList<Genoma> pop){
+    private synchronized ArrayList<Genoma> scegliNMigliori (int nMig, int nCopie, ArrayList<Genoma> pop){
         //Aggiungo la quantità necessaria di copie
         //dei nMax migliori alla popolazione in entrata
         for (;nMig>0;nMig--) {
@@ -161,7 +161,7 @@ public class AlgoritmoGenetico {
 
     //Prende la vecchia popolazione, fa un ciclo
     //e restituisce una nuova popolazione
-    public ArrayList<Genoma> Epoca(ArrayList<Genoma> vecchiaPop){
+    public synchronized ArrayList<Genoma> Epoca(ArrayList<Genoma> vecchiaPop){
         popolazione=vecchiaPop;
         Collections.sort(popolazione);
         Collections.reverse(popolazione);
@@ -207,15 +207,15 @@ public class AlgoritmoGenetico {
         return popolazione;
     }
 
-    public ArrayList<Genoma> getCromosomi(){
+    public synchronized ArrayList<Genoma> getCromosomi(){
         return popolazione;
     }
 
-    public double getFitnessMedia(){
+    public synchronized double getFitnessMedia(){
         return mediaFitness;
     }
 
-    public double getMigFitness(){
+    public synchronized double getMigFitness(){
         return migFitness;
     }
 }

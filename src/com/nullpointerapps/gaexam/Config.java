@@ -9,7 +9,7 @@ public class Config {
      public static double Pi = 3.14159265358979;
      public static double DuePi = Pi * 2;
      public static int LarghezzaFinestra = 800;
-     public static int AltezzaFinestra = 600;
+     public static int AltezzaFinestra = 800;
      public static int FPS = 0;
     public static int FPSfastMode = 480;
      public static int nInput = 0;

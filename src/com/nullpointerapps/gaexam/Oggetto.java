@@ -16,12 +16,12 @@ public class Oggetto
                 Math.random() * (Config.AltezzaFinestra - 45));
     }
 
-    public void paint(Graphics2D g2d) {
+    public synchronized void paint(Graphics2D g2d) {
         img=Main.imgOgg;
-        g2d.drawImage(img,(int)pos.x,(int)pos.y,15,15,null);
+        g2d.drawImage(img,(int)pos.x,(int)pos.y,13,18,null);
     }
 
-    public Vettore2D getPos () {
+    public synchronized Vettore2D getPos () {
         return pos;
     }
 }

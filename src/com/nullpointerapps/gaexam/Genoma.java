@@ -17,12 +17,12 @@ public class Genoma implements Comparable{
         this.fitness=fitness;
     }
 
-    public void setFitness(double fitness) {
+    public synchronized void setFitness(double fitness) {
         this.fitness=fitness;
     }
 
     @Override
-    public int compareTo(Object g) {
+    public synchronized int compareTo(Object g) {
         return (int) (this.fitness-((Genoma)g).fitness);
     }
 }

@@ -20,7 +20,7 @@ public class ReteNeurale {
         }
     }
 
-    public void creaRete(){
+    public synchronized void creaRete(){
         layers = new ArrayList<>();
         neuroni = new ArrayList<>();
         if(nLNascosti>0) {
@@ -49,11 +49,11 @@ public class ReteNeurale {
         return pesi;
     }
 
-    int getNPesi(){
+    synchronized int getNPesi(){
         return nInput*nNpLN+nNpLN*nOutput;
     }
 
-    void setPesi(ArrayList<Double> pesi){
+    synchronized void setPesi(ArrayList<Double> pesi){
         int contaPesi = 0 ;
         for(int i = 0;i<Config.nNascosti;i++) {
             for(int j =0;j<layers.get(i).nNeuroni;j++) {
@@ -66,7 +66,7 @@ public class ReteNeurale {
 
     }
 
-    ArrayList<Double> aggiorna(ArrayList<Double> inputs){
+    synchronized ArrayList<Double> aggiorna(ArrayList<Double> inputs){
         ArrayList<Double> outputs = new ArrayList<>();
         //contatore dei pesi
         int pesoC;
@@ -110,7 +110,7 @@ public class ReteNeurale {
         return outputs;
     }
 
-    Double Sigmoide(double attivazione, double risposta){
+    synchronized Double Sigmoide(double attivazione, double risposta){
         return 1/(1+Math.exp(-attivazione/risposta));
     }
 

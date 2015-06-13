@@ -17,6 +17,7 @@ public class Main extends JPanel {
     public static BufferedImage imgInd;
     public static BufferedImage imgOgg;
     public static BufferedImage imgMInd;
+    public static BufferedImage icon;
     private static ArrayList<Genoma> popolazione = new ArrayList<>();
     private static ArrayList<Individuo> individui = new ArrayList<>();
     private static AlgoritmoGenetico ag;
@@ -30,7 +31,9 @@ public class Main extends JPanel {
         try {
             new Config();
             imgInd = ImageIO.read((Main.class.getClassLoader().getResource("images/individuo.png")));
+            imgMInd = ImageIO.read((Main.class.getClassLoader().getResource("images/individuo-elite.png")));
             imgOgg = ImageIO.read((Main.class.getClassLoader().getResource("images/oggetto.png")));
+            icon = ImageIO.read((Main.class.getClassLoader().getResource("images/icon.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,6 +44,7 @@ public class Main extends JPanel {
         frame.setSize(Config.LarghezzaFinestra, Config.AltezzaFinestra);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setIconImage(icon);
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -49,11 +53,7 @@ public class Main extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_F) {
-                    if (main.isModVeloce) {
-                        main.isModVeloce = false;
-                    } else {
-                        main.isModVeloce = true;
-                    }
+                    main.isModVeloce = !main.isModVeloce;
                 }
 
             }
@@ -112,12 +112,21 @@ public class Main extends JPanel {
         }
     }
 
-    private void disegnaGrafico(Graphics2D g) {
+    private synchronized void disegnaGrafico(Graphics2D g) {
+        //sxA - sxB
+        g.drawLine(25,Config.AltezzaFinestra-45-480,25,Config.AltezzaFinestra-45);
+        //dxA - dxB
+        g.drawLine(Config.LarghezzaFinestra-20,Config.AltezzaFinestra-45-480,Config.LarghezzaFinestra-20,Config.AltezzaFinestra-45);
+        //sxA - dxA
+        g.drawLine(25,Config.AltezzaFinestra-45-480,Config.LarghezzaFinestra-20,Config.AltezzaFinestra-45-480);
+        //sxB - dxB
+        g.drawLine(25,Config.AltezzaFinestra-45,Config.LarghezzaFinestra-20,Config.AltezzaFinestra-45);
         for (int i = 0; i < contoGenerazione - 2; i++) {
-            g.drawLine(i * 20, listaFitnessMedie.get(i).intValue() * 20, (i + 1) * 20, listaFitnessMedie.get(i + 1).intValue() * 20);
-            g.drawLine(i * 20, listaFitnessMig.get(i).intValue() * 20, (i + 1) * 20, listaFitnessMig.get(i + 1).intValue() * 20);
+            g.setColor(Color.BLUE);
+            g.drawLine(i * (Config.LarghezzaFinestra-50)/(contoGenerazione-2)+25, Config.AltezzaFinestra-(listaFitnessMedie.get(i).intValue() * 8)-50, (i + 1) * (Config.LarghezzaFinestra-50)/(contoGenerazione-2)+25, Config.AltezzaFinestra-(listaFitnessMedie.get(i+1).intValue() * 8)-50);
+            g.setColor(Color.RED);
+            g.drawLine(i * (Config.LarghezzaFinestra-50)/(contoGenerazione-2)+25, Config.AltezzaFinestra-(listaFitnessMig.get(i).intValue() * 8)-50, (i + 1) * (Config.LarghezzaFinestra-50)/(contoGenerazione-2)+25, Config.AltezzaFinestra-(listaFitnessMig.get(i+1).intValue() * 8)-50);
         }
-
     }
 
     private synchronized void move() {
@@ -137,6 +146,10 @@ public class Main extends JPanel {
             for (int i = 0; i < Config.nIndividui; i++) {
                 individui.get(i).setPesi(popolazione.get(i).pesi);
                 individui.get(i).Reset();
+
+                if(i<Config.nElite) {
+                    individui.get(i).setElite(true);
+                }
             }
             oggetti.clear();
             nOggettiReali = 0;
@@ -157,7 +170,9 @@ public class Main extends JPanel {
             disegnaGrafico(g2d);
             g2d.setFont(new Font("Arial",Font.BOLD,20));
             if (listaFitnessMedie.size()!=0&&listaFitnessMig.size()!=0) {
+                g2d.setColor(Color.RED);
                 g2d.drawString("Fitness migliore: " + listaFitnessMig.get(contoGenerazione-2), 10, 60);
+                g2d.setColor(Color.BLUE);
                 g2d.drawString("Fitness medio: " + listaFitnessMedie.get(contoGenerazione-2), 10, 90);
             }
         } else {
@@ -165,7 +180,7 @@ public class Main extends JPanel {
             for (int i = 0; i < Config.nIndividui; i++) individui.get(i).paint(g2d);
         }
 
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 20));
         g2d.drawString("Generazione: " + contoGenerazione, 10, 30);
 

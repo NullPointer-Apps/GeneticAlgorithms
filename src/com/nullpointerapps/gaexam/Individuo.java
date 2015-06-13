@@ -18,6 +18,12 @@ public class Individuo{
     private double scalaIndividuo;
     private int indexObbiettivo;
     private BufferedImage img;
+    Rectangle a,b;
+    Vettore2D v,av,bv,obbiettivo;
+    double distanza, distObbiettivo;
+    double intSterzo;
+    ArrayList<Double> inputs,outputs;
+
 
     public Individuo(){
         rotazione = Math.random() * Config.DuePi;
@@ -35,7 +41,7 @@ public class Individuo{
         cervello.creaRete();
     }
 
-    public void paint(Graphics2D g2d) {
+    public synchronized void paint(Graphics2D g2d) {
         if (!elite)img=Main.imgInd;
         else img=Main.imgMInd;
         AffineTransform tx = new AffineTransform();
@@ -45,17 +51,16 @@ public class Individuo{
         g2d.drawImage(img, tx, null);
     }
 
-    public boolean move(){
-        ArrayList<java.lang.Double> inputs = new ArrayList<>();
-        ArrayList<java.lang.Double> outputs;
-        Vettore2D obiettivo = getObbiettivo(Main.oggetti);
+    public synchronized boolean move(){
+        inputs = new ArrayList<>();
+        getObbiettivo(Main.oggetti);
 
         //modifica il vettore rendendolo di lunghezza 1 in modo da poter fare un
         //confronto della direzione attraverso i versori
-        obiettivo.normalizza();
+        obbiettivo.normalizza();
 
-        inputs.add(obiettivo.x);
-        inputs.add(obiettivo.y);
+        inputs.add(obbiettivo.x);
+        inputs.add(obbiettivo.y);
         inputs.add(direzione.x);
         inputs.add(direzione.y);
         //vengono passati gli input alla rete neurale
@@ -66,7 +71,7 @@ public class Individuo{
         ruotaDx = outputs.get(0);
         ruotaSx = outputs.get(1);
         //calcola l'intensit� dello sterzo
-        double intSterzo = ruotaDx - ruotaSx;
+        intSterzo = ruotaDx - ruotaSx;
         //controlla che l'intensit� dello sterzo sia all'interno del
         //range fissato, se non lo � cambia i valori non consoni con
         //quelli del limite
@@ -91,32 +96,27 @@ public class Individuo{
     }
 
 
-    public Vettore2D getObbiettivo(ArrayList<Oggetto> oggetti){
-        double distObiettivo = 9999999.0;
-        Vettore2D obiettivo = new Vettore2D(0,0);
-        double distanza;
-        Vettore2D a;
-        Vettore2D b;
+    public synchronized void getObbiettivo(ArrayList<Oggetto> oggetti){
+        distObbiettivo = 9999999.0;
+        obbiettivo = new Vettore2D(0,0);
+
         for (int i = 0; i<oggetti.size();i++) {
-             b = oggetti.get(i).getPos();
-             a = b.diminuisci(pos);
-            distanza = Vettore2D.getLunghezza(a);
-            if(distanza < distObiettivo) {
-                distObiettivo = distanza;
-                obiettivo = pos.diminuisci(oggetti.get(i).getPos());
+             bv = oggetti.get(i).getPos();
+             av = bv.diminuisci(pos);
+            distanza = Vettore2D.getLunghezza(av);
+            if(distanza < distObbiettivo) {
+                distObbiettivo = distanza;
+                obbiettivo = pos.diminuisci(oggetti.get(i).getPos());
                 indexObbiettivo = i;
             }
         }
-        return obiettivo;
     }
 
-    public void controllaCollisione(){
-        Rectangle a = new Rectangle((int)pos.x,(int)pos.y,25,16);
-        Rectangle b;
-        Vettore2D v;
+    public synchronized void controllaCollisione(){
+         a = new Rectangle((int)pos.x,(int)pos.y,25,16);
         for(int i = 0;i<Main.oggetti.size();i++) {
             v = Main.oggetti.get(i).getPos();
-            b = new Rectangle((int)v.x,(int)v.y,15,15);
+            b = new Rectangle((int)v.x,(int)v.y,13,18);
             if(a.intersects(b)){
                 Main.oggetti.remove(i);
                 Main.nOggettiReali--;
@@ -125,26 +125,31 @@ public class Individuo{
         }
     }
 
-    public void Reset() {
-        pos = new Vettore2D(Math.random() * Config.LarghezzaFinestra,
-                Math.random() * Config.AltezzaFinestra);
-        fitness=0;
-        rotazione = Math.random() * Config.DuePi;
+    public synchronized void Reset() {
+       fitness=0;
+        pos = new Vettore2D(Math.random() * (Config.LarghezzaFinestra - 45),
+                Math.random() * (Config.AltezzaFinestra - 45));
+        direzione = new Vettore2D(Math.random(),
+                Math.random());
     }
 
-    public Vettore2D getPosition() {
+    public synchronized Vettore2D getPosition() {
         return pos;
     }
 
-    public double getFitness() {
+    public synchronized double getFitness() {
         return fitness;
     }
 
-    public void setPesi(ArrayList<java.lang.Double> pesi){
+    public synchronized void setPesi(ArrayList<java.lang.Double> pesi){
         cervello.setPesi(pesi);
     }
 
-    public int getNPesi(){
+    public synchronized int getNPesi(){
         return cervello.getNPesi();
+    }
+
+    public synchronized void setElite(boolean elite) {
+        this.elite = elite;
     }
 }
